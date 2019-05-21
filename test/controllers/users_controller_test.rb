@@ -52,4 +52,12 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 																						admin: true } }
 		assert_not @other_user.reload.admin?
 	end
+
+	test "should not allow to delete users if not admin —LC" do
+		log_in_as(@other_user)
+		assert_not @other_user.admin?
+		get users_path
+		assert_template 'users/index'
+		assert_select 'a[href=?]', user_path(@other_user)
+	end
 end
