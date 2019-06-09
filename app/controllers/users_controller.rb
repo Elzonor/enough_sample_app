@@ -71,4 +71,11 @@ class UsersController < ApplicationController
 		def admin_user
 			redirect_to(root_url) unless current_user.admin?
 		end
+
+		def create_activation_digest
+			#Create the token and the digest.
+			self.activation_token = User.new_token
+			self.activation_digest = User.digest(activation_token)
+		end
+
 end
